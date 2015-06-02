@@ -1,0 +1,211 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.dell.grupo1.PictureActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nova foto"
+        android:id="@+id/button5"
+        android:onClick="toMainActivity"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/horizontalScrollView"
+        android:layout_alignStart="@+id/horizontalScrollView"
+        android:layout_marginLeft="50px" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/horizontalScrollView"
+        android:background="#1E88E5"
+        android:fillViewport="false"
+        android:layout_above="@+id/button5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="42dp"
+        android:layout_marginTop="20dp" >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="15dp"
+                android:id="@+id/Original">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/imageView8"
+                    android:src="@drawable/original" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Original"
+                    android:id="@+id/textView15"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="bottom|center_horizontal" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="15dp"
+                android:id="@+id/Negativo">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/imageView7"
+                    android:src="@drawable/negative" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Negativo"
+                    android:id="@+id/textView14"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="bottom|center_horizontal" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="15dp"
+                android:id="@+id/Monocromatico">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/imageView6"
+                    android:src="@drawable/mono" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mono"
+                    android:id="@+id/textView13"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="bottom|center_horizontal" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="15dp"
+                android:id="@+id/Laplaciano">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/imageView5"
+                    android:src="@drawable/laplacianos" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Laplaciano"
+                    android:id="@+id/textView12"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="bottom|center_horizontal" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="15dp"
+                android:id="@+id/BV">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/imageView4"
+                    android:src="@drawable/bordasverticais" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Verticais"
+                    android:id="@+id/textView11"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="bottom|center_horizontal" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="15dp"
+                android:id="@+id/BH">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/imageView3"
+                    android:src="@drawable/bordashorizontais" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Horizontais"
+                    android:id="@+id/textView10"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="bottom|center_horizontal" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="15dp"
+                android:id="@+id/EC">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/imageView2"
+                    android:src="@drawable/original" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Escalas"
+                    android:id="@+id/textView9"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="bottom|center_horizontal" />
+            </FrameLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/Picture"
+        android:background="#212121"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/horizontalScrollView"
+        android:layout_alignEnd="@+id/horizontalScrollView"
+        android:layout_alignLeft="@+id/horizontalScrollView"
+        android:layout_alignStart="@+id/horizontalScrollView"
+        android:maxHeight="550px"
+        android:maxWidth="550px"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        android:id="@+id/button6"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/horizontalScrollView"
+        android:layout_alignEnd="@+id/horizontalScrollView"
+        android:layout_marginRight="50px" />
+</RelativeLayout>

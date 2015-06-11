@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import org.opencv.imgproc.*;
 
 
 public class PictureActivity extends ActionBarActivity {

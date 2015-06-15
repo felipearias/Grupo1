@@ -211,16 +211,12 @@ public class PictureActivity extends ActionBarActivity {
         barra = (SeekBar) findViewById(R.id.Controller);
         barra.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 setSalvarHab(btnsave, true);
                 Bitmap temp = Bitmap.createBitmap(originalPic);
                 Mat tmp = new Mat();
                 Utils.bitmapToMat(temp, tmp);
-                int valor = i/2;
-                if(valor < 2.5) {
-                    valor = (valor/2)*(-1);
-                }
-                tmp.convertTo(tmp, -1, valor, 50);
+                tmp.convertTo(tmp, -1, progress, 50);
                 Utils.matToBitmap(tmp, temp);
                 acumulator = temp;
                 updateView();

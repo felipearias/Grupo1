@@ -220,5 +220,6 @@
         android:layout_alignParentEnd="true"
         android:indeterminate="false"
         android:longClickable="false"
-        android:max="10" />
+        android:max="10"
+        android:progress="5" />
 </RelativeLayout>

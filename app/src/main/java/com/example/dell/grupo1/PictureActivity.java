@@ -2,6 +2,7 @@ package com.example.dell.grupo1;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
@@ -44,6 +45,7 @@ public class PictureActivity extends ActionBarActivity {
         else
             Log.d("SUCCESS", "OpenCV loaded");
     }
+
     public void Snap(View v) {
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(i, 1);
@@ -80,7 +82,9 @@ public class PictureActivity extends ActionBarActivity {
     }
 
     public void toMainActivity(View v) {
+        final MediaPlayer mp = MediaPlayer.create(PictureActivity.this, R.raw.buttonclick);
         Intent i = new Intent(this, MainActivity.class);
+        mp.start();
         startActivity(i);
     }
 
@@ -92,11 +96,13 @@ public class PictureActivity extends ActionBarActivity {
         Snap(new View(this));
         Mat x = new Mat();
 
+        final MediaPlayer mp = MediaPlayer.create(PictureActivity.this, R.raw.buttonclick);
         Button btnsave = (Button) findViewById(R.id.btnSalvar);
 
         btnsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
+                mp.start();
                 try{
                     saveImg();
                     Toast saveMgs = new Toast(getApplicationContext());

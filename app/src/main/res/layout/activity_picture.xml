@@ -165,7 +165,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_margin="15dp"
-                android:id="@+id/EC">
+                android:id="@+id/Contraste">
 
                 <ImageView
                     android:layout_width="fill_parent"
@@ -176,7 +176,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Escalas"
+                    android:text="Contraste"
                     android:id="@+id/textView9"
                     android:layout_marginBottom="5dp"
                     android:layout_gravity="bottom|center_horizontal" />

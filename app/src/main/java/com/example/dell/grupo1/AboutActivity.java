@@ -1,6 +1,7 @@
 package com.example.dell.grupo1;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,7 +12,9 @@ import android.view.View;
 public class AboutActivity extends ActionBarActivity {
 
     public void toMainActivity(View v) {
+        final MediaPlayer mp = MediaPlayer.create(AboutActivity.this, R.raw.buttonclick);
         Intent i = new Intent(this, MainActivity.class);
+        mp.start();
         startActivity(i);
     }
 

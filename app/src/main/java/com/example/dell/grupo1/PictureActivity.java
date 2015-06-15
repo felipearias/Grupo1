@@ -20,8 +20,10 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
+import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.*;
 
 import java.io.File;
@@ -132,7 +134,13 @@ public class PictureActivity extends ActionBarActivity {
         negativeFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bitmap temp = Bitmap.createBitmap(originalPic.getWidth(), originalPic.getHeight(), originalPic.getConfig());
+                Bitmap temp = Bitmap.createBitmap(originalPic);
+                Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_8UC1);
+                Utils.bitmapToMat(temp, tmp);
+                Mat invertColor = new Mat(tmp.rows(), tmp.cols(), tmp.type(), new Scalar(255, 255, 255));
+                Core.subtract(invertColor, tmp, tmp);
+                Utils.matToBitmap(tmp, temp);
+                acumulator = temp;
                 updateView();
             }
         });

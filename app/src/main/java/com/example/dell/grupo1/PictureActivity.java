@@ -19,6 +19,8 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.*;
 
@@ -108,6 +110,29 @@ public class PictureActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 acumulator = originalPic;
+                updateView();
+            }
+        });
+
+        FrameLayout monoFilter = (FrameLayout) findViewById(R.id.Monocromatico);
+        monoFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bitmap temp = Bitmap.createBitmap(originalPic);
+                Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_8UC1);
+                Utils.bitmapToMat(temp, tmp);
+                Imgproc.cvtColor(tmp, tmp, Imgproc.COLOR_RGB2GRAY);
+                Utils.matToBitmap(tmp, temp);
+                acumulator = temp;
+                updateView();
+            }
+        });
+
+        FrameLayout negativeFilter = (FrameLayout) findViewById(R.id.Negativo);
+        negativeFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bitmap temp = Bitmap.createBitmap(originalPic.getWidth(), originalPic.getHeight(), originalPic.getConfig());
                 updateView();
             }
         });

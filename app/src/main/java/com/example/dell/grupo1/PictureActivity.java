@@ -145,12 +145,15 @@ public class PictureActivity extends ActionBarActivity {
             }
         });
 
-        FrameLayout laplacienFilter = (FrameLayout) findViewById(R.id.Laplaciano);
-        laplacienFilter.setOnClickListener(new View.OnClickListener() {
+        FrameLayout laplacianFilter = (FrameLayout) findViewById(R.id.Laplaciano);
+        laplacianFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bitmap temp = Bitmap.createBitmap(originalPic);
-
+                Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_16UC1);
+                Utils.bitmapToMat(temp, tmp);
+                Imgproc.Laplacian(tmp, tmp, -1);
+                Utils.matToBitmap(tmp, temp);
                 acumulator = temp;
                 updateView();
             }

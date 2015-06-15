@@ -24,13 +24,6 @@ public class MainActivity extends ActionBarActivity {
         startActivity(i);
     }
 
-    public void toHistogramActivity(View v) {
-        final MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.buttonclick);
-        Intent i = new Intent(this, HistogramActivity.class);
-        mp.start();
-        startActivity(i);
-    }
-
     public void toPictureActivity(View v) {
         final MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.buttonclick);
         Intent i = new Intent(this, PictureActivity.class);

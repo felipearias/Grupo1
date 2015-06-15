@@ -24,6 +24,8 @@ import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfFloat;
+import org.opencv.core.MatOfInt;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.*;
 
@@ -31,6 +33,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.LinkedList;
 
 
 public class PictureActivity extends ActionBarActivity {
@@ -38,6 +41,7 @@ public class PictureActivity extends ActionBarActivity {
     static Bitmap acumulator;
     static ImageView frame;
     static Bitmap originalPic;
+    static Bitmap histograma;
     private static final String TAG = "MyActivity";
     static {
         if (!OpenCVLoader.initDebug())
@@ -76,6 +80,7 @@ public class PictureActivity extends ActionBarActivity {
             Bundle extras = data.getExtras();
             Bitmap foto = (Bitmap) extras.get("data");
             originalPic = foto;
+            histograma = foto;
             acumulator = originalPic;
             frame.setImageBitmap(acumulator);
         }
@@ -97,7 +102,7 @@ public class PictureActivity extends ActionBarActivity {
         Mat x = new Mat();
 
         final MediaPlayer mp = MediaPlayer.create(PictureActivity.this, R.raw.buttonclick);
-        Button btnsave = (Button) findViewById(R.id.btnSalvar);
+        final Button btnsave = (Button) findViewById(R.id.btnSalvar);
 
         btnsave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +131,7 @@ public class PictureActivity extends ActionBarActivity {
         negativeFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setSalvarHab(btnsave, true);
                 Bitmap temp = Bitmap.createBitmap(originalPic);
                 Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_16UC1);
                 Utils.bitmapToMat(temp, tmp);
@@ -141,6 +147,7 @@ public class PictureActivity extends ActionBarActivity {
         monoFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setSalvarHab(btnsave, true);
                 Bitmap temp = Bitmap.createBitmap(originalPic);
                 Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_16UC1);
                 Utils.bitmapToMat(temp, tmp);
@@ -155,6 +162,7 @@ public class PictureActivity extends ActionBarActivity {
         laplacianFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setSalvarHab(btnsave, true);
                 Bitmap temp = Bitmap.createBitmap(originalPic);
                 Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_16UC1);
                 Utils.bitmapToMat(temp, tmp);
@@ -169,6 +177,7 @@ public class PictureActivity extends ActionBarActivity {
         sobelVFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setSalvarHab(btnsave, true);
                 Bitmap temp = Bitmap.createBitmap(originalPic);
                 Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_16UC1);
                 Utils.bitmapToMat(temp, tmp);
@@ -185,6 +194,7 @@ public class PictureActivity extends ActionBarActivity {
         sobelHFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setSalvarHab(btnsave, true);
                 Bitmap temp = Bitmap.createBitmap(originalPic);
                 Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_16UC1);
                 Utils.bitmapToMat(temp, tmp);
@@ -196,6 +206,45 @@ public class PictureActivity extends ActionBarActivity {
                 updateView();
             }
         });
+
+        FrameLayout histogram = (FrameLayout) findViewById(R.id.Histograma);
+        histogram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setSalvarHab(btnsave, false);
+                Mat tmp = new Mat();
+                Utils.bitmapToMat(acumulator, tmp);
+                Imgproc.cvtColor(tmp, tmp, Imgproc.COLOR_RGB2GRAY);
+
+                java.util.List<Mat> matList = new LinkedList<Mat>();
+                matList.add(tmp);
+                Mat histogram = new Mat();
+                MatOfFloat ranges = new MatOfFloat(0, 256);
+                MatOfInt histSize = new MatOfInt(255);
+                Imgproc.calcHist(
+                        matList,
+                        new MatOfInt(0),
+                        new Mat(),
+                        histogram,
+                        histSize,
+                        ranges);
+
+                Mat histImage = Mat.zeros(100, (int) histSize.get(0, 0)[0], CvType.CV_8UC1);
+                Core.normalize(histogram, histogram, 1, histImage.rows(), Core.NORM_MINMAX, -1, new Mat());
+                for (int i = 0; i < (int) histSize.get(0, 0)[0]; i++) {
+                    Core.line(
+                            histImage,
+                            new org.opencv.core.Point(i, histImage.rows()),
+                            new org.opencv.core.Point(i, histImage.rows() - Math.round(histogram.get(i, 0)[0])),
+                            new Scalar(255, 255, 255),
+                            1, 8, 0);
+                }
+                Bitmap temp = Bitmap.createBitmap(histImage.cols(), histImage.rows(), Bitmap.Config.ARGB_8888);
+                Utils.matToBitmap(histImage, temp);
+                histograma = temp;
+                frame.setImageBitmap(histograma);
+            }
+        });
     }
 
     @Override
@@ -203,6 +252,10 @@ public class PictureActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_picture, menu);
         return true;
+    }
+
+    public void setSalvarHab(Button btn, Boolean x){
+        btn.setEnabled(x);
     }
 
     public void saveImg() throws IOException{

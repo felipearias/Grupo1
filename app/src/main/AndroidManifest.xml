@@ -22,10 +22,6 @@
             android:label="@string/title_activity_about" >
         </activity>
         <activity
-            android:name=".HistogramActivity"
-            android:label="@string/title_activity_histogram" >
-        </activity>
-        <activity
             android:name=".PictureActivity"
             android:label="@string/title_activity_picture" >
         </activity>

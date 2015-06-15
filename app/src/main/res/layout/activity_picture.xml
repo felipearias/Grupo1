@@ -181,6 +181,27 @@
                     android:layout_marginBottom="5dp"
                     android:layout_gravity="bottom|center_horizontal" />
             </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="15dp"
+                android:id="@+id/Histograma">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/imageView10"
+                    android:src="@drawable/original" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Histograma"
+                    android:id="@+id/textView16"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="bottom|center_horizontal" />
+            </FrameLayout>
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -208,4 +229,5 @@
         android:layout_alignRight="@+id/horizontalScrollView"
         android:layout_alignEnd="@+id/horizontalScrollView"
         android:layout_marginRight="50px" />
+
 </RelativeLayout>

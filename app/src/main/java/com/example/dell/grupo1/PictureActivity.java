@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -41,6 +42,7 @@ public class PictureActivity extends ActionBarActivity {
     static Bitmap acumulator;
     static ImageView frame;
     static Bitmap originalPic;
+    static SeekBar barra;
     static Bitmap histograma;
     private static final String TAG = "MyActivity";
     static {
@@ -99,7 +101,6 @@ public class PictureActivity extends ActionBarActivity {
         setContentView(R.layout.activity_picture);
         frame = (ImageView)findViewById(R.id.Picture);
         Snap(new View(this));
-        Mat x = new Mat();
 
         final MediaPlayer mp = MediaPlayer.create(PictureActivity.this, R.raw.buttonclick);
         final Button btnsave = (Button) findViewById(R.id.btnSalvar);
@@ -196,7 +197,7 @@ public class PictureActivity extends ActionBarActivity {
             public void onClick(View v) {
                 setSalvarHab(btnsave, true);
                 Bitmap temp = Bitmap.createBitmap(originalPic);
-                Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_16UC1);
+                Mat tmp = new Mat(temp.getWidth(), temp.getHeight(), CvType.CV_16UC1);
                 Utils.bitmapToMat(temp, tmp);
                 Imgproc.cvtColor(tmp, tmp, Imgproc.COLOR_RGB2GRAY);
                 Mat grad = new Mat();
@@ -204,6 +205,35 @@ public class PictureActivity extends ActionBarActivity {
                 Utils.matToBitmap(grad, temp);
                 acumulator = temp;
                 updateView();
+            }
+        });
+
+        barra = (SeekBar) findViewById(R.id.Controller);
+        barra.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                setSalvarHab(btnsave, true);
+                Bitmap temp = Bitmap.createBitmap(originalPic);
+                Mat tmp = new Mat();
+                Utils.bitmapToMat(temp, tmp);
+                int valor = i/2;
+                if(valor < 2.5) {
+                    valor = (valor/2)*(-1);
+                }
+                tmp.convertTo(tmp, -1, valor, 50);
+                Utils.matToBitmap(tmp, temp);
+                acumulator = temp;
+                updateView();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
 
@@ -270,6 +300,10 @@ public class PictureActivity extends ActionBarActivity {
         fOut.close();
 
         MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
+    }
+
+    public void controlB() throws IOException{
+
     }
 
     public void updateView(){

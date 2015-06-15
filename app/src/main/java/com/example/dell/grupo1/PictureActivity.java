@@ -116,12 +116,27 @@ public class PictureActivity extends ActionBarActivity {
             }
         });
 
+        FrameLayout negativeFilter = (FrameLayout) findViewById(R.id.Negativo);
+        negativeFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bitmap temp = Bitmap.createBitmap(originalPic);
+                Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_16UC1);
+                Utils.bitmapToMat(temp, tmp);
+                Mat invertColor = new Mat(tmp.rows(), tmp.cols(), tmp.type(), new Scalar(255, 255, 255));
+                Core.subtract(invertColor, tmp, tmp);
+                Utils.matToBitmap(tmp, temp);
+                acumulator = temp;
+                updateView();
+            }
+        });
+
         FrameLayout monoFilter = (FrameLayout) findViewById(R.id.Monocromatico);
         monoFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bitmap temp = Bitmap.createBitmap(originalPic);
-                Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_8UC1);
+                Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_16UC1);
                 Utils.bitmapToMat(temp, tmp);
                 Imgproc.cvtColor(tmp, tmp, Imgproc.COLOR_RGB2GRAY);
                 Utils.matToBitmap(tmp, temp);
@@ -130,16 +145,44 @@ public class PictureActivity extends ActionBarActivity {
             }
         });
 
-        FrameLayout negativeFilter = (FrameLayout) findViewById(R.id.Negativo);
-        negativeFilter.setOnClickListener(new View.OnClickListener() {
+        FrameLayout laplacienFilter = (FrameLayout) findViewById(R.id.Laplaciano);
+        laplacienFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bitmap temp = Bitmap.createBitmap(originalPic);
-                Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_8UC1);
+
+                acumulator = temp;
+                updateView();
+            }
+        });
+
+        FrameLayout sobelVFilter = (FrameLayout) findViewById(R.id.BV);
+        sobelVFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bitmap temp = Bitmap.createBitmap(originalPic);
+                Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_16UC1);
                 Utils.bitmapToMat(temp, tmp);
-                Mat invertColor = new Mat(tmp.rows(), tmp.cols(), tmp.type(), new Scalar(255, 255, 255));
-                Core.subtract(invertColor, tmp, tmp);
-                Utils.matToBitmap(tmp, temp);
+                Imgproc.cvtColor(tmp, tmp, Imgproc.COLOR_RGB2GRAY);
+                Mat grad = new Mat();
+                Imgproc.Sobel(tmp, grad, CvType.CV_8U, 1, 0, 3, 1, 0);
+                Utils.matToBitmap(grad, temp);
+                acumulator = temp;
+                updateView();
+            }
+        });
+
+        FrameLayout sobelHFilter = (FrameLayout) findViewById(R.id.BH);
+        sobelHFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bitmap temp = Bitmap.createBitmap(originalPic);
+                Mat tmp = new Mat (temp.getWidth(), temp.getHeight(), CvType.CV_16UC1);
+                Utils.bitmapToMat(temp, tmp);
+                Imgproc.cvtColor(tmp, tmp, Imgproc.COLOR_RGB2GRAY);
+                Mat grad = new Mat();
+                Imgproc.Sobel(tmp, grad, CvType.CV_8U, 0, 1, 3, 1, 0);
+                Utils.matToBitmap(grad, temp);
                 acumulator = temp;
                 updateView();
             }
@@ -164,7 +207,7 @@ public class PictureActivity extends ActionBarActivity {
         fOut.flush();
         fOut.close();
 
-        MediaStore.Images.Media.insertImage(getContentResolver(),file.getAbsolutePath(),file.getName(),file.getName());
+        MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
     }
 
     public void updateView(){

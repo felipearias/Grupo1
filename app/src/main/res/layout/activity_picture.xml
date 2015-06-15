@@ -203,7 +203,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Salvar"
-        android:id="@+id/button6"
+        android:id="@+id/btnSalvar"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/horizontalScrollView"
         android:layout_alignEnd="@+id/horizontalScrollView"
